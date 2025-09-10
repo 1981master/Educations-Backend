@@ -58,7 +58,7 @@ public class OsleeController {
     // Authenticate user
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                    request.getUsername(),
+                    request.getUsername().toUpperCase(),
                     request.getPassword()
             )
     );
@@ -77,9 +77,10 @@ public class OsleeController {
   public ResponseEntity<?> verifyCode(@RequestBody Map<String, String> request) {
     String email = request.get("email");
     String code = request.get("code");
-
+    //TODO: remove when done from DEV.
+    logger.info("the verification code is: ", code);
     // Fetch user from DB using email
-    Optional<User> userOpt = userRepository.findByEmail(email);
+    Optional<User> userOpt = userRepository.findByEmail(email.toUpperCase());
     if (userOpt.isEmpty()) {
       return ResponseEntity.badRequest().body("User not found");
     }
@@ -108,20 +109,20 @@ public class OsleeController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> signup(@RequestBody SignupRequest request) {
-    logger.info("Signup attempt for user: {}", request.getUsername());
+    logger.info("Signup attempt for user: {}", request.getUsername().toUpperCase());
 
-    if (userRepository.existsByUsername(request.getUsername())) {
+    if (userRepository.existsByUsername(request.getUsername().toUpperCase())) {
       return ResponseEntity.badRequest().body("Username is already taken");
     }
 
-    if (userRepository.existsByEmail(request.getEmail())) {
+    if (userRepository.existsByEmail(request.getEmail().toUpperCase())) {
       return ResponseEntity.badRequest().body("Email is already in use");
     }
 
     // Create new user
     User user = new User();
-    user.setUsername(request.getUsername());
-    user.setEmail(request.getEmail());
+    user.setUsername(request.getUsername().toUpperCase());
+    user.setEmail(request.getEmail().toUpperCase());
     user.setVerificationCode(String.format("%05d", new Random().nextInt(100000)));
     user.setCodeExpiry(LocalDateTime.now().plusMinutes(15));
     user.setIsVerified("N");
