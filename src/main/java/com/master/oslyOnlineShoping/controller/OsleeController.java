@@ -58,8 +58,8 @@ public class OsleeController {
     // Authenticate user
     Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                    request.getUsername().toUpperCase(),
-                    request.getPassword()
+                    request.getUsername().toUpperCase().trim(),
+                    request.getPassword().trim()
             )
     );
 

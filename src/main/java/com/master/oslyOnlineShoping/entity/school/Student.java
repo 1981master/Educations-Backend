@@ -1,17 +1,9 @@
 package com.master.oslyOnlineShoping.entity.school;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Table(name = "Students")
 public class Student {
 
@@ -21,26 +13,38 @@ public class Student {
 
     private String firstName;
     private String lastName;
-    private LocalDate dateOfBirth;
     private String parentContactInfo;
     private String grade;
+    private LocalDate dateOfBirth;
 
-    // Relationships
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Progress> progressList;
+    // Getters and setters
+    public Long getStudentId() { return studentId; }
+    public void setStudentId(Long studentId) { this.studentId = studentId; }
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Goal> goals;
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProgressReport> progressReports;
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Notification> notifications;
+    public String getParentContactInfo() { return parentContactInfo; }
+    public void setParentContactInfo(String parentContactInfo) { this.parentContactInfo = parentContactInfo; }
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Feedback> feedbackList;
+    public String getGrade() { return grade; }
+    public void setGrade(String grade) { this.grade = grade; }
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LearningAnalytics> analyticsList;
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
+    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", parentContactInfo='" + parentContactInfo + '\'' +
+                ", grade='" + grade + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
+    }
 }

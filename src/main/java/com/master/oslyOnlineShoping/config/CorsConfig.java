@@ -13,7 +13,8 @@ public class CorsConfig {
   public CorsFilter corsFilter() {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
-    config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8081", "http://localhost:8080", "http://localhost:8080/h2-console"));
+    config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8081", "http://localhost:8080", "http://localhost:8080/h2-console",
+            "http://localhost:8080/api/students"));
     config.setAllowedHeaders(List.of("*"));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
