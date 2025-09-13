@@ -38,14 +38,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()   // ✅ allow H2 console
                         // Allow GET methods for products, categories, and stores without any authentication check
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/categories").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/stores").permitAll()
-
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/getStudents").permitAll()
                         // Require specific permissions for POST methods
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/products").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/categories").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/stores").permitAll()//.hasAuthority("add_product")
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/students").permitAll()
 
                         // Any other request needs authentication
                         .anyRequest().authenticated()

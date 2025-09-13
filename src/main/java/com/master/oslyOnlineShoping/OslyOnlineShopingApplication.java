@@ -4,16 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@SpringBootApplication
+@SpringBootApplication(
+        excludeName = "org.springframework.boot.autoconfigure.jdbc.DataSourceJndiAutoConfiguration"
+)
 @EntityScan(
-    basePackages = {
-      "com.master.oslyOnlineShoping.entity",
-      "com.master.oslyOnlineShoping.entity.products"
-    })
+        basePackages = {
+                "com.master.oslyOnlineShoping.entity",
+        })
 public class OslyOnlineShopingApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(OslyOnlineShopingApplication.class, args);
-    System.out.println("Besm ALAH ALRHMAN ALRAHEEM");
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(OslyOnlineShopingApplication.class, args);
+        System.out.println("Besm ALAH ALRHMAN ALRAHEEM");
+    }
 }
