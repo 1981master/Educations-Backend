@@ -10,13 +10,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/students")
 public class StudentController {
 
     @Autowired
     private StudentRepository studentRepository;
 
-    @PostMapping("/students")
+    @PostMapping("/save")
     public StudentDTO saveStudent(@RequestBody StudentDTO studentDto) {
         Student student = new Student();
         student.setFirstName(studentDto.getFirstName());
@@ -42,5 +42,35 @@ public class StudentController {
     public List<Student> getStudents(){
         return studentRepository.findAll();
     }
+
+    @RequestMapping("/delete/{id}")
+    public void deleteStudent(@PathVariable Long id){
+        studentRepository.deleteById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public StudentDTO updateStudent(@PathVariable Long id, @RequestBody StudentDTO studentDto) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        student.setFirstName(studentDto.getFirstName());
+        student.setLastName(studentDto.getLastName());
+        student.setParentContactInfo(studentDto.getParentContactInfo());
+        student.setGrade(studentDto.getGrade());
+        student.setDateOfBirth(LocalDate.parse(studentDto.getDateOfBirth()));
+
+        Student updated = studentRepository.save(student);
+
+        StudentDTO response = new StudentDTO();
+        response.setId(updated.getStudentId());
+        response.setFirstName(updated.getFirstName());
+        response.setLastName(updated.getLastName());
+        response.setParentContactInfo(updated.getParentContactInfo());
+        response.setGrade(updated.getGrade());
+        response.setDateOfBirth(updated.getDateOfBirth().toString());
+
+        return response;
+    }
+
 
 }
